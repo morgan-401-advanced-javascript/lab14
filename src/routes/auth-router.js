@@ -12,7 +12,8 @@ const auth = require('../middleware/auth.js')
  * @returns {object} 200 - bearer token
  */
 router.post('/signup', (req, res, next) => {
-    
+
+    res.status(200).json({token: 'Bearer ' + req.token});
 
 
 });

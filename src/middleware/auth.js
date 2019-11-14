@@ -13,11 +13,13 @@ const basicDecode = async encoded=>{
     let base64 = Buffer.from(encoded, 'base64'); // base64 buffer conversion of string
     let plainText = base64.toString(); // conversion from base64 buffer back to string
     let [username, password] = plainText.split(':'); // split string using delimiter : to get pieces
-
     let user = await users.getFromField({username});
-
-    if(user.length && await user[0].comparePassword(password)){ 
-        return user[0];
+    if (user.length){
+        let isSamePassword = await user[0].comparePassword(password);
+        if (isSamePassword) return user[0];
+    } else {
+        let newUser = await users.create({username: username, password: password});
+        return newUser;
     }
 
 };
