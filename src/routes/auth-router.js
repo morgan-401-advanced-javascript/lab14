@@ -29,7 +29,6 @@ router.post('/signup', (req, res, next) => {
 router.post('/signin', auth,  async (req, res, next) => {
     res.status(200).json({token: 'Bearer ' + req.token});
 
-
 });
 
 module.exports = router;

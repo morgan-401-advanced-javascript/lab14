@@ -3,9 +3,10 @@
 const { startDB, stopDB } = require('./supertester.js');
 const Users = require('../src/models/users-model.js');
 const Roles = require('../src/models/roles-model.js');
-const Books = require('../src/models/books-modle.js');
+const Books = require('../src/models/books-model.js');
 const server = require('../src/server.js').server;
 const supertester = require('./supertester.js');
+process.env.JWT_SECRET = 'secret';
 
 const mockRequest = supertester.server(server);
 
@@ -73,6 +74,21 @@ beforeAll(async done => {
 
 afterAll(stopDB);
 
-/* describe('xxx', () => {
-  it('xxx', () => { }); 
-}); */
+describe('auth.js requires correct request headers', () => {
+  it('throws error when request header is missing', async () => { 
+   let response = await mockRequest
+   .post('/signin')
+   .set('Content-Type', 'application/json')
+   .set('Accept', 'application/json');
+   console.log(response.status);
+
+   expect(response.status).toBe(400);
+   expect(response.body.error).toBe('missing request headers!');
+
+  }); 
+});
+
+
+// describe('auth.js requires correct request headers', () => {
+//   it('xxx', () => { }); 
+// });
