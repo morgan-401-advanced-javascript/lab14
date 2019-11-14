@@ -26,6 +26,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 
 // Routes
+/**
+ * @route GET /
+ * @return {HTML} 200 the index.html homepage
+ */
 app.get('/', (req, res, next) => {
   res.sendFile(path.join(__dirname + '/../public/index.html'));
 });

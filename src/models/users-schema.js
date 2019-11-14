@@ -15,6 +15,24 @@ const users = new mongoose.Schema({
   email: { type: String },
   role: { type: String, default: 'user', enum: ['admin', 'editor', 'user'] },
 });
+/**
+ * Compares plain text password with stored hashed password with individual user record
+ * @param {string} plainTextPassword password to check in string format
+ * @returns {boolean} -true or false depending on if passwords match
+ */
+users.methods.comparePassword = function(plainTextPassword){
+  return  bcrypt.compare(plainTextPassword, this.password);
+
+};
+
+users.methods.generateToken = function(timeout){
+
+  let expiry = Math.floor(Date.now()/1000) + 60 * 60;
+  if(parseInt(timeout)) expiry = Math.floor(Date.now()/1000) + parseInt(timeout)
+
+  return jwt.sign({data: {id: this._id,}, exp: expiry,}, process.env.JWT_SECRET)
+
+}
 
 /**
  * Exporting a mongoose model generated from the above schema, statics, methods and middleware
