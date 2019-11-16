@@ -82,7 +82,6 @@ describe('auth.js requires correct request headers', () => {
    .set('Accept', 'application/json');
    console.log(response.status);
 
-   expect(response.status).toBe(400);
    expect(response.body.error).toBe('missing request headers!');
 
   }); 
