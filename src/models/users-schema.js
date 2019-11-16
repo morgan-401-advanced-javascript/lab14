@@ -16,7 +16,7 @@ const users = new mongoose.Schema({
   role: { type: String, default: 'user', enum: ['admin', 'editor', 'user'] }
   ,
 },
-  { toObject: {virtuals: true}, toJSON: {virtuals: true}});
+{ toObject: {virtuals: true}, toJSON: {virtuals: true}});
 
 users.virtual('virtual_role', {
   ref: 'roles',
@@ -26,10 +26,10 @@ users.virtual('virtual_role', {
 });
 users.pre('findOne', function(){
   this.populate('virtual_role');
-})
+});
 users.pre('save', async function(){
   this.password = await bcrypt.hash(this.password, 10);
-})
+});
 /**
  * Compares plain text password with stored hashed password with individual user record
  * @param {string} plainTextPassword password to check in string format
@@ -43,16 +43,16 @@ users.methods.comparePassword = function(plainTextPassword){
 users.methods.generateToken = function(timeout){
 
   let expiry = Math.floor(Date.now()/1000) + 60 * 60;
-  if(parseInt(timeout)) expiry = Math.floor(Date.now()/1000) + parseInt(timeout)
+  if(parseInt(timeout)) expiry = Math.floor(Date.now()/1000) + parseInt(timeout);
 
-  return jwt.sign({data: {id: this._id,}, exp: expiry,}, process.env.JWT_SECRET)
+  return jwt.sign({data: {id: this._id}, exp: expiry}, process.env.JWT_SECRET);
 
-}
+};
 
 users.methods.can =  function(capability){
   return this.virtual_role.capability.includes(capability);
 
-}
+};
 
 
 

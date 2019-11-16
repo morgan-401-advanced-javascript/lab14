@@ -1,4 +1,4 @@
-'use strict';
+'Use Strict';
 
 const { startDB, stopDB } = require('./supertester.js');
 const Users = require('../src/models/users-model.js');
@@ -76,13 +76,13 @@ afterAll(stopDB);
 
 describe('auth.js requires correct request headers', () => {
   it('throws error when request header is missing', async () => { 
-   let response = await mockRequest
-   .post('/signin')
-   .set('Content-Type', 'application/json')
-   .set('Accept', 'application/json');
-   console.log(response.status);
+    let response = await mockRequest
+      .post('/signin')
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json');
+    console.log(response.status);
 
-   expect(response.body.error).toBe('missing request headers!');
+    expect(response.body.error).toBe('missing request headers!');
 
   }); 
 });

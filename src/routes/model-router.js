@@ -17,17 +17,17 @@ router.param('model', modelFinder.load);
  * @returns {Error} 500
  */
 router.get('/model/:model', auth, async (req, res, next) => {
-if(!req.model) next({status: 404, msg: 'cannot find requested mode'});
-let records = await req.model.getFromField({});
-let recordCount = records.length;
+  if(!req.model) next({status: 404, msg: 'cannot find requested mode'});
+  let records = await req.model.getFromField({});
+  let recordCount = records.length;
 
-let data = {
+  let data = {
     model: req.params.model,
     count: recordCount,
-};
-if (req.user && req.user.role === 'admin') data.records = records;
+  };
+  if (req.user && req.user.role === 'admin') data.records = records;
 
-res.status(200).json(data);
+  res.status(200).json(data);
 });
 /**
  * Prints details about a model
@@ -42,16 +42,16 @@ res.status(200).json(data);
  * @returns {Error} 403 forbidden access
  */
 router.get('/model/:model/:id', auth, async (req, res, next) => {
-    if (req.user.role === 'admin'){
+  if (req.user.role === 'admin'){
     let record = await req.model.get(req.params.id);
     if(record && record._id)
-    res.status(200).json(record);
+      res.status(200).json(record);
     else
-    next({status: 400, msg: 'unable to find records'});
-}
-    else {
-        next({status: 403, msg: 'forbidden to access this route'})
-    }
+      next({status: 400, msg: 'unable to find records'});
+  }
+  else {
+    next({status: 403, msg: 'forbidden to access this route'});
+  }
 
 
 

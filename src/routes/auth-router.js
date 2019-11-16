@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/auth.js')
+const auth = require('../middleware/auth.js');
 
 /**
  * @route POST /signup
@@ -13,7 +13,7 @@ const auth = require('../middleware/auth.js')
  */
 router.post('/signup', (req, res, next) => {
 
-    res.status(200).json({token: 'Bearer ' + req.token});
+  res.status(200).json({token: 'Bearer ' + req.token});
 
 
 });
@@ -27,7 +27,7 @@ router.post('/signup', (req, res, next) => {
  * @returns {object} 200 - bearer token
  */
 router.post('/signin', auth,  async (req, res, next) => {
-    res.status(200).json({token: 'Bearer ' + req.token});
+  res.status(200).json({token: 'Bearer ' + req.token});
 
 });
 

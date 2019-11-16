@@ -5,10 +5,9 @@
 ### Author: Morgan T Shaw
 
 ### Links and Resources
-* [submission PR](http://xyz.com)
-* [travis](http://xyz.com)
-* [back-end](http://xyz.com) (when applicable)
-* [front-end](http://xyz.com) (when applicable)
+* [submission PR](https://github.com/morgan-401-advanced-javascript/lab14/pull/1)
+* [travis](https://travis-ci.com/morgan-401-advanced-javascript/lab14/builds/136802899)
+* [front-end](https://morganlab14.herokuapp.com/) (when applicable)
 
 #### Documentation
 * [api docs](http://xyz.com) (API servers)

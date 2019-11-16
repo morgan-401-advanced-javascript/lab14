@@ -6,11 +6,11 @@
  * @returns {string} msg error message
  */
 module.exports = (err, req, res, next) => {
-    if (err.status)
-    res.status
-    else
+  if (err.status)
+    res.status;
+  else
     res.status(500);
 
-    if(err.msg) res.json({ error: err.msg})
-    else res.json({error: 'Unknown error'});
+  if(err.msg) res.json({ error: err.msg});
+  else res.json({error: 'Unknown error'});
 };
