@@ -6,12 +6,12 @@ const auth = require('../middleware/auth.js');
 const Books = require('../models/books-model.js');
 const books = new Books();
 
-router.get('/books', async (req, res, next) => {
+router.get('/books', auth, async (req, res, next) => {
   let allBooks = await books.getFromField({});
   let filteredBooks = [];
 
   allBooks.forEach(book => {
-    if(book.auth.includes(req.user.role)) filteredBooks.push(book);
+    if(book.auth.includes(req.user.role)) filteredBooks.push({Title: book.title, Author: book.author});
   });
   if (filteredBooks.length) res.status(200).json(filteredBooks);
   else next({status: 403, msg: 'you cannot see books'});
@@ -21,7 +21,7 @@ router.post('/books', auth, async (req, res, next) => {
   if(req.user.can('create')){
     try {
       await  books.create(req.body);
-      return 'success!';
+      res.status(200).json('You created a book!');
     }
     catch(e){
       next({status: 400, msg: e.name});
@@ -33,6 +33,9 @@ router.post('/books', auth, async (req, res, next) => {
 });
 
 router.put('/books/:id', auth, async (req, res, next) => {
+  if (req.user.can('update') !== true)
+    return next({ status: 403, msg: 'You cannot update books' });
+  
   let book = await books.get.get(req.params.id);
   if (book && book._id){
     let newBookData = {
@@ -44,6 +47,7 @@ router.put('/books/:id', auth, async (req, res, next) => {
     };
     try{
       await books.update(req.params.id, newBookData);
+      res.status(200).json('Successfully updated book');
 
     } catch(e){
       console.error(e);

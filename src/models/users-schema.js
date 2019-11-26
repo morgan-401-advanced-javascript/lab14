@@ -35,8 +35,8 @@ users.pre('save', async function(){
  * @param {string} plainTextPassword password to check in string format
  * @returns {boolean} -true or false depending on if passwords match
  */
-users.methods.comparePassword = function(plainTextPassword){
-  return  bcrypt.compare(plainTextPassword, this.password);
+users.methods.comparePassword = async function(plainTextPassword){
+  return  await bcrypt.compare(plainTextPassword, this.password);
 
 };
 

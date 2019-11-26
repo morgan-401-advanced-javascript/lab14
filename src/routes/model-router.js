@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const modelFinder = require('../middleware/model-finder.js');
 const auth = require('../middleware/auth.js');
+const preventAuthErrors = require('../middleware/prevent-auth-errors');
 
 router.param('model', modelFinder.load);
 
@@ -16,7 +17,7 @@ router.param('model', modelFinder.load);
  * @returns {object} 200 an object with model name & count
  * @returns {Error} 500
  */
-router.get('/model/:model', auth, async (req, res, next) => {
+router.get('/model/:model', preventAuthErrors, auth, async (req, res, next) => {
   if(!req.model) next({status: 404, msg: 'cannot find requested mode'});
   let records = await req.model.getFromField({});
   let recordCount = records.length;
